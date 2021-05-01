@@ -27,23 +27,23 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::up1Timer(TObject *Sender)
 {
-   if(paddle1->Top >= 20)paddle1->Top -=5;
+   if(paddle1->Top > 20)paddle1->Top -=10;
 }
 //---------------------------------------------------------------------------
  
 void __fastcall TForm1::down1Timer(TObject *Sender)
 {
-   if(paddle1->Top + paddle1->Height <= background->Height) paddle1->Top += 5;
+   if(paddle1->Top + paddle1->Height < background->Height) paddle1->Top += 10;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::up2Timer(TObject *Sender)
 {
-   if(paddle2->Top >= 20) paddle2->Top -=5;
+   if(paddle2->Top > 20) paddle2->Top -=10;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::down2Timer(TObject *Sender)
 {
-  if(paddle2->Top + paddle2->Height <= background->Height) paddle2->Top +=5;
+  if(paddle2->Top + paddle2->Height < background->Height) paddle2->Top +=10;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key,
