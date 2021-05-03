@@ -1,10 +1,12 @@
 object Form1: TForm1
-  Left = 210
-  Top = 35
+  Left = 206
+  Top = 147
   Width = 1183
   Height = 469
   Caption = 'Form1'
   Color = clBtnFace
+  UseDockManager = True
+  DockSite = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -571,9 +573,15 @@ object Form1: TForm1
     Top = 48
   end
   object TimerBall: TTimer
-    Interval = 50
+    Interval = 20
     OnTimer = TimerBallTimer
     Left = 16
+    Top = 80
+  end
+  object SpeedTimeTimer: TTimer
+    Interval = 5000
+    OnTimer = SpeedTimeTimerTimer
+    Left = 48
     Top = 80
   end
 end

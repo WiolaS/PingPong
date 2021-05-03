@@ -5,13 +5,15 @@
 
 #include "Unit1.h"
 
-int x = -8;
-int y = -8;
-
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
+
+int x = -8;
+int y = -5;
+
+int theRunningTimeOfTheProgram = 0;
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -79,6 +81,8 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
    ball->Left  += x;
    ball->Top += y;
 
+   theRunningTimeOfTheProgram++;
+
    bMiddleLine->Height = background->Height;
    bMiddleLine->Left = background->Width/2;
 
@@ -98,6 +102,14 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
 
    // Test bounce the ball off the right wall
   if(ball->Left + ball->Width >= background->Width - bRightLine->Width) x = -x;
+  
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::SpeedTimeTimerTimer(TObject *Sender)
+{
+   if(TimerBall->Interval > 1) TimerBall->Interval -= 1.5;
 }
 //---------------------------------------------------------------------------
 
