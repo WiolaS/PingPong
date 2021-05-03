@@ -4,10 +4,15 @@
 #pragma hdrstop
 
 #include "Unit1.h"
+
+int x = -8;
+int y = -8;
+
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -23,6 +28,7 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
    paddle1->Top = background->Height / 2 - paddle1->Height / 2;
    paddle2->Top = background->Height / 2 - paddle1->Height / 2;
    paddle2->Left = background->Width - 75;
+
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::up1Timer(TObject *Sender)
@@ -66,4 +72,32 @@ void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
 }
 //---------------------------------------------------------------------------
 
+
+
+void __fastcall TForm1::TimerBallTimer(TObject *Sender)
+{
+   ball->Left  += x;
+   ball->Top += y;
+
+   bMiddleLine->Height = background->Height;
+   bMiddleLine->Left = background->Width/2;
+
+   paddle1->Top = background->Height / 2 - paddle1->Height / 2;
+   paddle2->Top = background->Height / 2 - paddle1->Height / 2;
+   paddle2->Left = background->Width - 75;
+
+
+   // bounce the ball off the top wall
+   if (ball->Top <= background->Top) y = -y;
+
+   // bounce the ball off the bottom wall
+   if(ball->Top + ball->Height >= background->Height + bBottomLine->Height) y = -y;
+
+   // Test bounce the ball off the left wall
+  if(ball->Left <= background->Left) x = -x;
+
+   // Test bounce the ball off the right wall
+  if(ball->Left + ball->Width >= background->Width - bRightLine->Width) x = -x;
+}
+//---------------------------------------------------------------------------
 
