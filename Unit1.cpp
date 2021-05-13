@@ -76,6 +76,65 @@ void bounceTheBallWithTheLeftPaddle (TImage *ball, TImage *paddle1)
    }
 }
 
+void bounceTheBallWithTheRightPaddle (TImage *ball, TImage *paddle2)
+{
+  // loss of the ball by the right player
+  if(ball->Left > paddle2->Left + paddle2->Width)
+  {
+     //TimerBall->Enabled = false;
+     //ball->Visible = false;
+
+   //bounce the ball from the center of the paddle (+- 1/4 of the ball height)
+   } else if (ball->Left >= paddle2->Left - ball->Width &&
+              ball->Top >= paddle2->Top + paddle2->Height / 2 - ball->Height *3/4 &&
+              ball->Top <= paddle2->Top + paddle2->Height / 2 - ball->Height /4)
+   {
+     if (horizontalMovementValue > 0)
+     {
+        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        verticalMovementValue = 0;
+     }
+
+   //standard bounce the ball from the paddle
+   } else  if (ball->Left >= paddle2->Left - ball->Width &&
+     ball->Top < paddle2->Top + paddle2->Height - ball->Height / 2 &&
+     ball->Top > paddle2->Top - ball->Height / 2)
+   {
+     if (horizontalMovementValue > 0)
+     {
+       if (ball->Top < paddle2->Top + paddle2->Height / 2 - ball->Height / 2)
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         verticalMovementValue = -initialValueOfVerticalMovement;
+       }
+       else
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         verticalMovementValue = initialValueOfVerticalMovement;
+       }
+     }
+   //bounce a ball at the ends of a paddle
+   } else if (ball->Left >= paddle2->Left - ball->Width &&
+     ball->Top <= paddle2->Top + paddle2->Height - 1 &&
+     ball->Top >= paddle2->Top - ball->Height + 1)
+   {
+     if (horizontalMovementValue > 0)
+     {
+       if (ball->Top < paddle2->Top + paddle2->Height / 2 - ball->Height / 2)
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+         verticalMovementValue = -initialValueOfHorizontalMovement;
+       }
+       else
+       {
+        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        verticalMovementValue = initialValueOfHorizontalMovement;
+       }
+     }
+   }
+}
+
+
 
 
 
@@ -102,7 +161,7 @@ void __fastcall TForm1::up1Timer(TObject *Sender)
    if(paddle1->Top >= 20)paddle1->Top -=5;
 }
 //---------------------------------------------------------------------------
- 
+
 void __fastcall TForm1::down1Timer(TObject *Sender)
 {
    if(paddle1->Top + paddle1->Height <= background->Height) paddle1->Top += 5;
@@ -159,6 +218,7 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
   if(ball->Left + ball->Width >= background->Width - bRightLine->Width) horizontalMovementValue = -horizontalMovementValue;
 
   bounceTheBallWithTheLeftPaddle (ball, paddle1);
+  bounceTheBallWithTheRightPaddle (ball, paddle2);
 
 }
 //---------------------------------------------------------------------------
@@ -168,6 +228,7 @@ void __fastcall TForm1::SpeedTimeTimerTimer(TObject *Sender)
    if(TimerBall->Interval > 1) TimerBall->Interval -= 1;
 }
 //---------------------------------------------------------------------------
+
 
 
 
