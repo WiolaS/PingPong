@@ -18,6 +18,65 @@ int initialValueOfHorizontalMovement = -15;
 int verticalMovementValue = -10;
 int initialValueOfVerticalMovement = -10;
 
+void bounceTheBallWithTheLeftPaddle (TImage *ball, TImage *paddle1)
+{
+  // loss of the ball by the left player
+  if(ball->Left < paddle1->Left)
+  {
+     //TimerBall->Enabled = false;
+     //ball->Visible = false;
+
+   //bounce the ball from the center of the paddle (+- 1/4 of the ball height)
+   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+              ball->Top >= paddle1->Top + paddle1->Height / 2 - ball->Height *3/4 &&
+              ball->Top <= paddle1->Top + paddle1->Height / 2 - ball->Height /4)
+   {
+     if (horizontalMovementValue < 0)
+     {
+        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        verticalMovementValue = 0;
+     }
+
+   //standard bounce the ball from the paddle
+   } else  if (ball->Left <= paddle1->Left + paddle1->Width &&
+     ball->Top - ball->Height / 2 < paddle1->Top + paddle1->Height &&
+     ball->Top - ball->Height / 2 > paddle1->Top)
+   {
+     if (horizontalMovementValue < 0)
+     {
+       if (ball->Top - ball->Height / 2 < paddle1->Top + paddle1->Height / 2)
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         verticalMovementValue = -initialValueOfVerticalMovement;
+       }
+       else
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         verticalMovementValue = initialValueOfVerticalMovement;
+       }
+     }
+   //bounce a ball at the ends of a paddle
+   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+     ball->Top - 1 <= paddle1->Top + paddle1->Height &&
+     ball->Top - ball->Height + 1 >= paddle1->Top)
+   {
+     if (horizontalMovementValue < 0)
+     {
+       if (ball->Top - ball->Height / 2 < paddle1->Top + paddle1->Height / 2)
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+         verticalMovementValue = -initialValueOfHorizontalMovement;
+       }
+       else
+       {
+        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        verticalMovementValue = initialValueOfHorizontalMovement;
+       }
+     }
+   }
+}
+
+
 
 
 //---------------------------------------------------------------------------
@@ -99,91 +158,8 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
    // Test bounce the ball off the right wall
   if(ball->Left + ball->Width >= background->Width - bRightLine->Width) horizontalMovementValue = -horizontalMovementValue;
 
+  bounceTheBallWithTheLeftPaddle (ball, paddle1);
 
-  // loss of the ball by the first player - warunek trójargumentowy
-  if(ball->Left < paddle1->Left)
-  {
-     //TimerBall->Enabled = false;
-     //ball->Visible = false;
-
-   //bounce the ball from the center of the paddle
-   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
-     ball->Top + ball->Height * 3 / 4 >= paddle1->Top + paddle1->Height / 2 &&
-     ball->Top - ball->Height / 4 <= paddle1->Top + paddle1->Height / 2)
-   {
-     if (horizontalMovementValue < 0)
-     {
-        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
-        verticalMovementValue = 0;
-     }
-
-   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
-     ball->Top + ball->Height / 2 < paddle1->Top + paddle1->Height &&
-     ball->Top + ball->Height / 2 > paddle1->Top)
-   {
-     if (horizontalMovementValue < 0)
-     {
-       if (ball->Top - ball->Height / 2 < paddle1->Top - paddle1->Height / 2)
-       {
-         horizontalMovementValue = -initialValueOfHorizontalMovement;
-         verticalMovementValue = -initialValueOfVerticalMovement;
-       }
-       else
-       {
-         horizontalMovementValue = -initialValueOfHorizontalMovement;
-         verticalMovementValue = initialValueOfVerticalMovement;
-       }
-     }
-
-   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
-     ball->Top + 1 < paddle1->Top + paddle1->Height &&
-     ball->Top + ball->Height - 1 > paddle1->Top)
-   {
-     if (horizontalMovementValue < 0)
-     {
-       if (ball->Top - ball->Height / 2 < paddle1->Top - paddle1->Height / 2)
-       {
-         horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
-         verticalMovementValue = -initialValueOfHorizontalMovement;
-       }
-       else
-       {
-        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
-        verticalMovementValue = initialValueOfHorizontalMovement;
-       }
-     }
-   }
-
-
-
-
-  /*} else if (ball->Left <= paddle1->Left + paddle1->Width &&
-    (ball->Top - ball->Height / 2 == paddle1->Top + paddle1->Height ||
-     ball->Top - ball->Height / 2 == paddle1->Top))
-  {
-     if (x > 0)
-     {
-        x = -x;
-        y +=5;
-      }
-
-   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
-     ball->Top - ball->Height / 2 == paddle1->Top + paddle1->Height / 2)
-   {
-     if (x > 0)
-     {
-        x = -x;
-        y = 0;
-      }
-    } else //if (ball->Left <= paddle1->Left + paddle1->Width &&
-    // ball->Top - ball->Height / 2 < paddle1->Top + paddle1->Height &&
-     //ball->Top - ball->Height / 2 > paddle1->Top)
-   {
-     if (x > 0)
-     {
-        x = -x;
-      }
-   } */
 }
 //---------------------------------------------------------------------------
 

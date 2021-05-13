@@ -1,8 +1,8 @@
 object Form1: TForm1
   Left = 206
   Top = 147
-  Width = 859
-  Height = 455
+  Width = 876
+  Height = 529
   Caption = 'Form1'
   Color = clBtnFace
   UseDockManager = True
@@ -21,8 +21,8 @@ object Form1: TForm1
   object background: TShape
     Left = 10
     Top = 10
-    Width = 823
-    Height = 396
+    Width = 840
+    Height = 470
     Align = alClient
     Brush.Color = 3368448
   end
@@ -30,27 +30,27 @@ object Form1: TForm1
     Left = 0
     Top = 10
     Width = 10
-    Height = 396
+    Height = 470
     Align = alLeft
   end
   object bTopLine: TShape
     Left = 0
     Top = 0
-    Width = 843
+    Width = 860
     Height = 10
     Align = alTop
   end
   object bRightLine: TShape
-    Left = 833
+    Left = 850
     Top = 10
     Width = 10
-    Height = 396
+    Height = 470
     Align = alRight
   end
   object bBottomLine: TShape
     Left = 0
-    Top = 406
-    Width = 843
+    Top = 480
+    Width = 860
     Height = 10
     Align = alBottom
   end
@@ -64,7 +64,7 @@ object Form1: TForm1
   end
   object paddle1: TImage
     Left = 75
-    Top = 120
+    Top = 64
     Width = 20
     Height = 140
     AutoSize = True
@@ -337,7 +337,7 @@ object Form1: TForm1
   end
   object paddle2: TImage
     Left = 640
-    Top = 152
+    Top = 72
     Width = 20
     Height = 140
     AutoSize = True
@@ -609,8 +609,8 @@ object Form1: TForm1
       1F80941F80941F80941F80941F8094FFFFFF}
   end
   object ball: TImage
-    Left = 248
-    Top = 312
+    Left = 216
+    Top = 304
     Width = 32
     Height = 32
     AutoSize = True
