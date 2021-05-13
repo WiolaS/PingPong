@@ -10,10 +10,15 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
-int x = -8;
-int y = -4;
+int x = -16;
+int y = -9;
 
-int theRunningTimeOfTheProgram = 0;
+int horizontalMovementValue = -15;
+int initialValueOfHorizontalMovement = -15;
+int verticalMovementValue = -10;
+int initialValueOfVerticalMovement = -10;
+
+
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -78,38 +83,115 @@ void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
 
 void __fastcall TForm1::TimerBallTimer(TObject *Sender)
 {
-   ball->Left  += x;
-   ball->Top += y;
-
-   theRunningTimeOfTheProgram++;
-
-   bMiddleLine->Height = background->Height;
-   bMiddleLine->Left = background->Width/2;
-
-   paddle1->Top = background->Height / 2 - paddle1->Height / 2;
-   paddle2->Top = background->Height / 2 - paddle1->Height / 2;
-   paddle2->Left = background->Width - 75;
+   ball->Left += horizontalMovementValue;
+   ball->Top += verticalMovementValue;
 
 
    // bounce the ball off the top wall
-   if (ball->Top <= background->Top) y = -y;
+   if (ball->Top <= background->Top) verticalMovementValue = -verticalMovementValue;
 
    // bounce the ball off the bottom wall
-   if(ball->Top + ball->Height >= background->Height + bBottomLine->Height) y = -y;
+   if(ball->Top + ball->Height >= background->Height + bBottomLine->Height) verticalMovementValue = -verticalMovementValue;
 
    // Test bounce the ball off the left wall
-  if(ball->Left <= background->Left) x = -x;
+  if(ball->Left <= background->Left) horizontalMovementValue = -horizontalMovementValue;
 
    // Test bounce the ball off the right wall
-  if(ball->Left + ball->Width >= background->Width - bRightLine->Width) x = -x;
-  
+  if(ball->Left + ball->Width >= background->Width - bRightLine->Width) horizontalMovementValue = -horizontalMovementValue;
 
+
+  // loss of the ball by the first player - warunek trójargumentowy
+  if(ball->Left < paddle1->Left)
+  {
+     //TimerBall->Enabled = false;
+     //ball->Visible = false;
+
+   //bounce the ball from the center of the paddle
+   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+     ball->Top + ball->Height * 3 / 4 >= paddle1->Top + paddle1->Height / 2 &&
+     ball->Top - ball->Height / 4 <= paddle1->Top + paddle1->Height / 2)
+   {
+     if (horizontalMovementValue < 0)
+     {
+        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        verticalMovementValue = 0;
+     }
+
+   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+     ball->Top + ball->Height / 2 < paddle1->Top + paddle1->Height &&
+     ball->Top + ball->Height / 2 > paddle1->Top)
+   {
+     if (horizontalMovementValue < 0)
+     {
+       if (ball->Top - ball->Height / 2 < paddle1->Top - paddle1->Height / 2)
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         verticalMovementValue = -initialValueOfVerticalMovement;
+       }
+       else
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         verticalMovementValue = initialValueOfVerticalMovement;
+       }
+     }
+
+   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+     ball->Top + 1 < paddle1->Top + paddle1->Height &&
+     ball->Top + ball->Height - 1 > paddle1->Top)
+   {
+     if (horizontalMovementValue < 0)
+     {
+       if (ball->Top - ball->Height / 2 < paddle1->Top - paddle1->Height / 2)
+       {
+         horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+         verticalMovementValue = -initialValueOfHorizontalMovement;
+       }
+       else
+       {
+        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        verticalMovementValue = initialValueOfHorizontalMovement;
+       }
+     }
+   }
+
+
+
+
+  /*} else if (ball->Left <= paddle1->Left + paddle1->Width &&
+    (ball->Top - ball->Height / 2 == paddle1->Top + paddle1->Height ||
+     ball->Top - ball->Height / 2 == paddle1->Top))
+  {
+     if (x > 0)
+     {
+        x = -x;
+        y +=5;
+      }
+
+   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+     ball->Top - ball->Height / 2 == paddle1->Top + paddle1->Height / 2)
+   {
+     if (x > 0)
+     {
+        x = -x;
+        y = 0;
+      }
+    } else //if (ball->Left <= paddle1->Left + paddle1->Width &&
+    // ball->Top - ball->Height / 2 < paddle1->Top + paddle1->Height &&
+     //ball->Top - ball->Height / 2 > paddle1->Top)
+   {
+     if (x > 0)
+     {
+        x = -x;
+      }
+   } */
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::SpeedTimeTimerTimer(TObject *Sender)
 {
-   if(TimerBall->Interval > 1) TimerBall->Interval -= 2;
+   if(TimerBall->Interval > 1) TimerBall->Interval -= 1;
 }
 //---------------------------------------------------------------------------
+
+
 

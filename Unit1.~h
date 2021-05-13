@@ -25,9 +25,9 @@ __published:	// IDE-managed Components
         TTimer *down1;
         TTimer *up2;
         TTimer *down2;
-        TImage *ball;
         TTimer *TimerBall;
         TTimer *SpeedTimeTimer;
+        TImage *ball;
         void __fastcall FormCreate(TObject *Sender);
         void __fastcall up1Timer(TObject *Sender);
         void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
