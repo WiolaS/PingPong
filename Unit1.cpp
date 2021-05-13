@@ -2,6 +2,7 @@
 
 #include <vcl.h>
 #pragma hdrstop
+#include "mmsystem.h"
 
 #include "Unit1.h"
 
@@ -33,6 +34,7 @@ void bounceTheBallWithTheLeftPaddle (TImage *ball, TImage *paddle1)
    {
      if (horizontalMovementValue < 0)
      {
+        sndPlaySound("sound/pingpong.wav", SND_ASYNC);
         horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
         verticalMovementValue = 0;
      }
@@ -46,11 +48,13 @@ void bounceTheBallWithTheLeftPaddle (TImage *ball, TImage *paddle1)
      {
        if (ball->Top < paddle1->Top + paddle1->Height / 2 - ball->Height / 2)
        {
+         sndPlaySound("sound/pingpong.wav", SND_ASYNC);
          horizontalMovementValue = -initialValueOfHorizontalMovement;
          verticalMovementValue = -initialValueOfVerticalMovement;
        }
        else
        {
+         sndPlaySound("sound/pingpong.wav", SND_ASYNC);
          horizontalMovementValue = -initialValueOfHorizontalMovement;
          verticalMovementValue = initialValueOfVerticalMovement;
        }
@@ -64,11 +68,13 @@ void bounceTheBallWithTheLeftPaddle (TImage *ball, TImage *paddle1)
      {
        if (ball->Top < paddle1->Top + paddle1->Height / 2 - ball->Height / 2)
        {
+         sndPlaySound("sound/pingpong.wav", SND_ASYNC);
          horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
          verticalMovementValue = -initialValueOfHorizontalMovement;
        }
        else
        {
+        sndPlaySound("sound/pingpong.wav", SND_ASYNC);
         horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
         verticalMovementValue = initialValueOfHorizontalMovement;
        }
@@ -91,7 +97,8 @@ void bounceTheBallWithTheRightPaddle (TImage *ball, TImage *paddle2)
    {
      if (horizontalMovementValue > 0)
      {
-        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        sndPlaySound("sound/pingpong.wav", SND_ASYNC);
+        horizontalMovementValue = initialValueOfHorizontalMovement * 2;
         verticalMovementValue = 0;
      }
 
@@ -104,12 +111,14 @@ void bounceTheBallWithTheRightPaddle (TImage *ball, TImage *paddle2)
      {
        if (ball->Top < paddle2->Top + paddle2->Height / 2 - ball->Height / 2)
        {
-         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         sndPlaySound("sound/pingpong.wav", SND_ASYNC);
+         horizontalMovementValue = initialValueOfHorizontalMovement;
          verticalMovementValue = -initialValueOfVerticalMovement;
        }
        else
        {
-         horizontalMovementValue = -initialValueOfHorizontalMovement;
+         sndPlaySound("sound/pingpong.wav", SND_ASYNC);
+         horizontalMovementValue = initialValueOfHorizontalMovement;
          verticalMovementValue = initialValueOfVerticalMovement;
        }
      }
@@ -122,18 +131,19 @@ void bounceTheBallWithTheRightPaddle (TImage *ball, TImage *paddle2)
      {
        if (ball->Top < paddle2->Top + paddle2->Height / 2 - ball->Height / 2)
        {
-         horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+         sndPlaySound("sound/pingpong.wav", SND_ASYNC);
+         horizontalMovementValue = initialValueOfHorizontalMovement * 2;
          verticalMovementValue = -initialValueOfHorizontalMovement;
        }
        else
        {
-        horizontalMovementValue = -initialValueOfHorizontalMovement * 2;
+        sndPlaySound("sound/pingpong.wavzz", SND_ASYNC);
+        horizontalMovementValue = initialValueOfHorizontalMovement * 2;
         verticalMovementValue = initialValueOfHorizontalMovement;
        }
      }
    }
 }
-
 
 
 
