@@ -1,9 +1,9 @@
 object Form1: TForm1
-  Left = 350
-  Top = 286
-  Width = 876
+  Left = 336
+  Top = 168
+  Width = 1101
   Height = 529
-  Caption = 'Form1'
+  Caption = 'PingPong by Wiola'
   Color = clBtnFace
   UseDockManager = True
   DockSite = True
@@ -21,7 +21,7 @@ object Form1: TForm1
   object background: TShape
     Left = 10
     Top = 10
-    Width = 840
+    Width = 1065
     Height = 470
     Align = alClient
     Brush.Color = 3368448
@@ -36,12 +36,12 @@ object Form1: TForm1
   object bTopLine: TShape
     Left = 0
     Top = 0
-    Width = 860
+    Width = 1085
     Height = 10
     Align = alTop
   end
   object bRightLine: TShape
-    Left = 850
+    Left = 1075
     Top = 10
     Width = 10
     Height = 470
@@ -50,7 +50,7 @@ object Form1: TForm1
   object bBottomLine: TShape
     Left = 0
     Top = 480
-    Width = 860
+    Width = 1085
     Height = 10
     Align = alBottom
   end
@@ -63,8 +63,8 @@ object Form1: TForm1
     Brush.Style = bsDiagCross
   end
   object paddle1: TImage
-    Left = 75
-    Top = 64
+    Left = 171
+    Top = 72
     Width = 20
     Height = 140
     AutoSize = True
@@ -336,8 +336,8 @@ object Form1: TForm1
       1F80941F80941F80941F80941F8094FFFFFF}
   end
   object paddle2: TImage
-    Left = 640
-    Top = 72
+    Left = 720
+    Top = 88
     Width = 20
     Height = 140
     AutoSize = True
@@ -610,7 +610,7 @@ object Form1: TForm1
   end
   object ball: TImage
     Left = 216
-    Top = 384
+    Top = 296
     Width = 32
     Height = 32
     AutoSize = True
@@ -717,6 +717,91 @@ object Form1: TForm1
       FFFF}
     Transparent = True
   end
+  object Label1: TLabel
+    Left = 112
+    Top = 56
+    Width = 537
+    Height = 57
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Zagrajmy w Ping Ponga!'
+    Color = 14342874
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -37
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Layout = tlCenter
+  end
+  object punctation: TLabel
+    Left = 264
+    Top = 128
+    Width = 241
+    Height = 57
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '0:0'
+    Color = 14342874
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -29
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Layout = tlCenter
+  end
+  object Bounces: TLabel
+    Left = 336
+    Top = 200
+    Width = 289
+    Height = 57
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Ilosc odbic: '
+    Color = 14342874
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -29
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Layout = tlCenter
+  end
+  object Button1: TButton
+    Left = 304
+    Top = 336
+    Width = 177
+    Height = 49
+    Cursor = crHandPoint
+    Caption = 'Nowa gra'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -29
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 280
+    Top = 272
+    Width = 265
+    Height = 49
+    Caption = 'Nastepna runda'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -29
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+    OnClick = Button2Click
+  end
   object up1: TTimer
     Enabled = False
     Interval = 10
@@ -746,6 +831,7 @@ object Form1: TForm1
     Top = 48
   end
   object TimerBall: TTimer
+    Enabled = False
     Interval = 40
     OnTimer = TimerBallTimer
     Left = 16
@@ -756,5 +842,10 @@ object Form1: TForm1
     OnTimer = SpeedTimeTimerTimer
     Left = 48
     Top = 80
+  end
+  object Countdown: TTimer
+    OnTimer = CountdownTimer
+    Left = 16
+    Top = 112
   end
 end
