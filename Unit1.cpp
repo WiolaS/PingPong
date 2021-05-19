@@ -19,33 +19,38 @@ int numberOfLeftPlayerWins = 0;
 int numberOfRightPlayerWins = 0;
 int numberOfRounds = 0;
 int numberOfBounces = 0;
-int startingTime = 5;
+int startingTime = 3;
+int spareSpace = 0;
 
-void showLabels (TLabel *Label1, TLabel *punctation, TLabel *Bounces, TButton *Button1, TButton *Button2)
+void showLabels ()
 {
-   punctation->Caption = IntToStr(numberOfLeftPlayerWins) + ":" + IntToStr(numberOfRightPlayerWins);
-   Bounces->Caption = "Ilosc odbic: " + IntToStr(numberOfBounces);
+   Form1->punctation->Caption = "|" + IntToStr(numberOfLeftPlayerWins) + ":" + IntToStr(numberOfRightPlayerWins) + "|";
+   Form1->Bounces->Caption = "~> Ilosc odbic: " + IntToStr(numberOfBounces);
 
-   Label1->Visible = true;
-   Button1->Visible = true;
-   Button2->Visible = true;
-   punctation->Visible = true;
-   Bounces->Visible = true;
+   Form1->Label1->Visible = true;
+   Form1->Button1->Visible = true;
+   Form1->Button2->Visible = true;
+   Form1->punctation->Visible = true;
+   Form1->Bounces->Visible = true;
 }
 
-void bounceTheBallWithTheLeftPaddle (TTimer *TimerBall, TImage *ball, TImage *paddle1, TLabel *Label1, TLabel *punctation, TLabel *Bounces, TButton *Button1, TButton *Button2)
+void bounceTheBallWithTheLeftPaddle (TImage *ball, TImage *paddle1)
 {
+  if (horizontalMovementValue >= -15) spareSpace = 5;
+  else if (horizontalMovementValue >= -30) spareSpace = 20;
+
   // loss of the ball by the left player
   if(ball->Left < paddle1->Left)
   {
      sndPlaySound("sound/applause.wav", SND_ASYNC);
-     TimerBall->Enabled = false;
+     Form1->TimerBall->Enabled = false;
      ball->Visible = false;
      numberOfRightPlayerWins++;
-     showLabels (Label1, punctation, Bounces, Button1, Button2);
+     Form1->Label1->Caption = "~> Punkt dla prawego gracza >";
+     showLabels ();
 
    //bounce the ball from the center of the paddle (+- 1/4 of the ball height)
-   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+   } else if (ball->Left <= paddle1->Left + paddle1->Width + spareSpace &&
               ball->Top >= paddle1->Top + paddle1->Height / 2 - ball->Height *3/4 &&
               ball->Top <= paddle1->Top + paddle1->Height / 2 - ball->Height /4)
    {
@@ -58,7 +63,7 @@ void bounceTheBallWithTheLeftPaddle (TTimer *TimerBall, TImage *ball, TImage *pa
      }
 
    //standard bounce the ball from the paddle
-   } else  if (ball->Left <= paddle1->Left + paddle1->Width &&
+   } else  if (ball->Left <= paddle1->Left + paddle1->Width + spareSpace &&
      ball->Top < paddle1->Top + paddle1->Height - ball->Height / 2 &&
      ball->Top > paddle1->Top - ball->Height / 2)
    {
@@ -80,7 +85,7 @@ void bounceTheBallWithTheLeftPaddle (TTimer *TimerBall, TImage *ball, TImage *pa
        }
      }
    //bounce a ball at the ends of a paddle
-   } else if (ball->Left <= paddle1->Left + paddle1->Width &&
+   } else if (ball->Left <= paddle1->Left + paddle1->Width + spareSpace &&
      ball->Top <= paddle1->Top + paddle1->Height - 1 &&
      ball->Top >= paddle1->Top - ball->Height + 1)
    {
@@ -104,19 +109,23 @@ void bounceTheBallWithTheLeftPaddle (TTimer *TimerBall, TImage *ball, TImage *pa
    }
 }
 
-void bounceTheBallWithTheRightPaddle (TTimer *TimerBall, TImage *ball, TImage *paddle2, TLabel *Label1, TLabel *punctation, TLabel *Bounces, TButton *Button1, TButton *Button2)
+void bounceTheBallWithTheRightPaddle (TImage *ball, TImage *paddle2)
 {
+  if (horizontalMovementValue >= -15) spareSpace = 5;
+  else if (horizontalMovementValue >= -30) spareSpace = 20;
+
   // loss of the ball by the right player
   if(ball->Left > paddle2->Left + paddle2->Width)
   {
-      sndPlaySound("sound/applause.wav", SND_ASYNC);
-     TimerBall->Enabled = false;
+     sndPlaySound("sound/applause.wav", SND_ASYNC);
+     Form1->TimerBall->Enabled = false;
      ball->Visible = false;
      numberOfLeftPlayerWins++;
-     showLabels (Label1, punctation, Bounces, Button1, Button2);
+     Form1->Label1->Caption = "<~ Punkt dla lewego gracza";
+     showLabels ();
 
    //bounce the ball from the center of the paddle (+- 1/4 of the ball height)
-   } else if (ball->Left >= paddle2->Left - ball->Width &&
+   } else if (ball->Left >= paddle2->Left - ball->Width - spareSpace &&
               ball->Top >= paddle2->Top + paddle2->Height / 2 - ball->Height *3/4 &&
               ball->Top <= paddle2->Top + paddle2->Height / 2 - ball->Height /4)
    {
@@ -130,7 +139,7 @@ void bounceTheBallWithTheRightPaddle (TTimer *TimerBall, TImage *ball, TImage *p
      }
 
    //standard bounce the ball from the paddle
-   } else  if (ball->Left >= paddle2->Left - ball->Width &&
+   } else  if (ball->Left >= paddle2->Left - ball->Width - spareSpace &&
      ball->Top < paddle2->Top + paddle2->Height - ball->Height / 2 &&
      ball->Top > paddle2->Top - ball->Height / 2)
    {
@@ -152,7 +161,7 @@ void bounceTheBallWithTheRightPaddle (TTimer *TimerBall, TImage *ball, TImage *p
        }
      }
    //bounce a ball at the ends of a paddle
-   } else if (ball->Left >= paddle2->Left - ball->Width &&
+   } else if (ball->Left >= paddle2->Left - ball->Width - spareSpace &&
      ball->Top <= paddle2->Top + paddle2->Height - 1 &&
      ball->Top >= paddle2->Top - ball->Height + 1)
    {
@@ -167,7 +176,7 @@ void bounceTheBallWithTheRightPaddle (TTimer *TimerBall, TImage *ball, TImage *p
        }
        else
        {
-        sndPlaySound("sound/pingpong.wavzz", SND_ASYNC);
+        sndPlaySound("sound/pingpong.wav", SND_ASYNC);
         horizontalMovementValue = initialValueOfHorizontalMovement * 2;
         verticalMovementValue = initialValueOfHorizontalMovement;
         numberOfBounces++;
@@ -175,9 +184,6 @@ void bounceTheBallWithTheRightPaddle (TTimer *TimerBall, TImage *ball, TImage *p
      }
    }
 }
-
-
-
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -209,9 +215,11 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
    Bounces->Visible = false;
    Countdown->Enabled = false;
    SpeedTimeTimer->Enabled = true;
+   ball->Top = (background->Height + bTopLine->Height *2) /2 - ball->Height /2;
+   horizontalMovementValue = -15;
+   verticalMovementValue = -10;
 
-   Label1->Caption = "Zagrajmy w Ping Ponga!";
-
+   Label1->Caption = "~> Zagrajmy w Ping Ponga! <~";
 
 }
 //---------------------------------------------------------------------------
@@ -256,8 +264,6 @@ void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
 }
 //---------------------------------------------------------------------------
 
-
-
 void __fastcall TForm1::TimerBallTimer(TObject *Sender)
 {
    ball->Left += horizontalMovementValue;
@@ -265,10 +271,18 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
 
 
    // bounce the ball off the top wall
-   if (ball->Top <= background->Top) verticalMovementValue = -verticalMovementValue;
+   if (ball->Top <= background->Top)
+   {
+     verticalMovementValue = -verticalMovementValue;
+     sndPlaySound("sound/pingpong.wav", SND_ASYNC);
+   }
 
    // bounce the ball off the bottom wall
-   if(ball->Top + ball->Height >= background->Height + bBottomLine->Height) verticalMovementValue = -verticalMovementValue;
+   if(ball->Top + ball->Height >= background->Height + bBottomLine->Height)
+   {
+     verticalMovementValue = -verticalMovementValue;
+     sndPlaySound("sound/pingpong.wav", SND_ASYNC);
+   }  
 
    // Test bounce the ball off the left wall
   if(ball->Left <= background->Left) horizontalMovementValue = -horizontalMovementValue;
@@ -276,8 +290,8 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
    // Test bounce the ball off the right wall
   if(ball->Left + ball->Width >= background->Width - bRightLine->Width) horizontalMovementValue = -horizontalMovementValue;
 
-  bounceTheBallWithTheLeftPaddle (TimerBall, ball, paddle1, Label1, punctation, Bounces, Button1, Button2);
-  bounceTheBallWithTheRightPaddle (TimerBall, ball, paddle2, Label1, punctation, Bounces, Button1, Button2);
+  bounceTheBallWithTheLeftPaddle (ball, paddle1);
+  bounceTheBallWithTheRightPaddle (ball, paddle2);
 
 }
 //---------------------------------------------------------------------------
@@ -291,54 +305,62 @@ void __fastcall TForm1::SpeedTimeTimerTimer(TObject *Sender)
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-  startingTime = 5;
+  startingTime = 3;
   sndPlaySound("sound/gong.wav", SND_ASYNC);
   Countdown->Enabled = true;
   CountdownTimer(Sender);
-  //Application->ProcessMessages(); Sleep(5000);
-  //FormCreate(Sender);
 
   numberOfLeftPlayerWins = 0;
   numberOfRightPlayerWins = 0;
   numberOfRounds = 0;
   numberOfBounces = 0;
-  //Label1->Visible = false;
+  Label1->Visible = false;
   Button1->Visible = false;
 
-  TimerBall->Enabled = true;
-  TimerBallTimer(Sender);
 }
 //---------------------------------------------------------------------------
 
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
-  startingTime = 5;
+  startingTime = 3;
   sndPlaySound("sound/gong.wav", SND_ASYNC);
   Countdown->Enabled = true;
   CountdownTimer(Sender);
-  //Application->ProcessMessages(); Sleep(5000);
-  //FormCreate(Sender);
 
   numberOfBounces = 0;
-  //Label1->Visible = false;
+  Label1->Visible = false;
   Button1->Visible = false;
-  TimerBall->Enabled = true;
-  TimerBallTimer(Sender);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::CountdownTimer(TObject *Sender)
 {
-    startingTime--;
-    Label1->Caption = IntToStr(startingTime);
-    //Application->ProcessMessages(); Sleep(1000);
+    punctation->Visible = true;
+    Label1->Visible = false;
+    Bounces->Visible = false;
+    Button2->Visible = false;
+    Button1->Visible = false;
+    punctation->Caption = "~" + IntToStr(startingTime) + "~";
 
-   if(startingTime <= 1)
+   if(startingTime < 1)
    {
-     Label1->Caption = "START!";
+     punctation->Caption = "START!";
+     Application->ProcessMessages(); Sleep(1000);
      Countdown->Enabled = false;
+
+     TimerBall->Interval = 40;
+     TimerBall->Enabled = true;
+     FormCreate(Sender);
+     TimerBallTimer(Sender);
    }
+   startingTime--;
 }
 //---------------------------------------------------------------------------
+
+
+
+
+
+
 

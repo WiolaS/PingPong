@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 336
-  Top = 168
+  Left = 297
+  Top = 199
   Width = 1101
   Height = 529
   Caption = 'PingPong by Wiola'
@@ -720,14 +720,14 @@ object Form1: TForm1
   object Label1: TLabel
     Left = 112
     Top = 56
-    Width = 537
+    Width = 577
     Height = 57
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Zagrajmy w Ping Ponga!'
-    Color = 14342874
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clBlack
+    Caption = '~> Zagrajmy w Ping Ponga! <~'
+    Color = 12954545
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
     Font.Height = -37
     Font.Name = 'Comic Sans MS'
     Font.Style = [fsBold]
@@ -736,14 +736,14 @@ object Form1: TForm1
     Layout = tlCenter
   end
   object punctation: TLabel
-    Left = 264
-    Top = 128
-    Width = 241
+    Left = 360
+    Top = 200
+    Width = 161
     Height = 57
     Alignment = taCenter
     AutoSize = False
-    Caption = '0:0'
-    Color = 14342874
+    Caption = '|0:0|'
+    Color = 14866140
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -29
@@ -754,14 +754,14 @@ object Form1: TForm1
     Layout = tlCenter
   end
   object Bounces: TLabel
-    Left = 336
-    Top = 200
+    Left = 304
+    Top = 128
     Width = 289
     Height = 57
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Ilosc odbic: '
-    Color = 14342874
+    Caption = '~> Ilosc odbic: '
+    Color = 12954545
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -29
@@ -774,10 +774,10 @@ object Form1: TForm1
   object Button1: TButton
     Left = 304
     Top = 336
-    Width = 177
+    Width = 217
     Height = 49
     Cursor = crHandPoint
-    Caption = 'Nowa gra'
+    Caption = '~> Nowa gra'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -29
@@ -790,9 +790,10 @@ object Form1: TForm1
   object Button2: TButton
     Left = 280
     Top = 272
-    Width = 265
+    Width = 313
     Height = 49
-    Caption = 'Nastepna runda'
+    Cursor = crHandPoint
+    Caption = '~> Nastepna runda'
     Font.Charset = EASTEUROPE_CHARSET
     Font.Color = clWindowText
     Font.Height = -29
