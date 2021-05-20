@@ -27,7 +27,7 @@ int numberOfDisplayedMessageBox = 0;
 void showLabels ()
 {
    Form1->punctation->Caption = "|" + IntToStr(numberOfLeftPlayerWins) + ":" + IntToStr(numberOfRightPlayerWins) + "|";
-   Form1->Bounces->Caption = "~> Iloœæ odbiæ: " + IntToStr(numberOfBounces);
+   Form1->Bounces->Caption = "~> Ilosc odbic: " + IntToStr(numberOfBounces);
 
    Form1->Label1->Visible = true;
    Form1->Button1->Visible = true;
@@ -203,7 +203,7 @@ Paletka zosta³a podzielona na poni¿sze strefy:\n\
  - œrodkowa czêœæ paletki: pi³ka odbija siê poziomo i przyspiesza,\n\
  - górna czêœæ paletki: pi³ka odbija sie w dó³,\n\
  - dolna czêœæ paletki: pi³ka odbija sie w górê,\n\
- - skrajne górna i dolna czêœæ paletki: pi³ka zmiania k¹t odbicia i przyspiesza.\n\
+ - skrajne górna i dolna czêœæ paletki: pi³ka zmienia k¹t odbicia i przyspiesza.\n\
 Im d³u¿ej odbijasz, tym pi³ka szybciej przemieszcza siê.\n\
 Mo¿esz dowolnie zmieiaæ pole gry.\n\n\
 Mi³ej zabawy! :)";
@@ -217,6 +217,7 @@ Mi³ej zabawy! :)";
        numberOfDisplayedMessageBox ++;
      }
 
+   //set the initial position of objects
    bMiddleLine->Height = background->Height;
    bMiddleLine->Left = (background->Width + bLeftLine->Width *2) /2 - bMiddleLine->Width /2;
    ball->Left = (background->Width + bLeftLine->Width *2) /2 - ball->Width /2;
@@ -224,21 +225,19 @@ Mi³ej zabawy! :)";
    punctation->Left = (background->Width + bLeftLine->Width *2) /2 - punctation->Width /2;
    Button2->Left = (background->Width + bLeftLine->Width *2) /2 - Button2->Width /2;
    Bounces->Left = (background->Width + bLeftLine->Width *2) /2 - Bounces->Width /2;
-
    paddle1->Top = background->Height / 2 - paddle1->Height / 2;
    paddle1->Left = 70;
    paddle2->Top = background->Height / 2 - paddle1->Height / 2;
    paddle2->Left = background->Width - 70 + bRightLine->Width;
-
    Label1->Left = (background->Width + bLeftLine->Width *2) /2 - Label1->Width /2;
    Button1->Left = (background->Width + bLeftLine->Width *2) /2 - Button1->Width /2 ;
+   ball->Top = (background->Height + bTopLine->Height *2) /2 - ball->Height /2;
 
    punctation->Visible = false;
    Button2->Visible = false;
    Bounces->Visible = false;
    Countdown->Enabled = false;
    SpeedTimeTimer->Enabled = true;
-   ball->Top = (background->Height + bTopLine->Height *2) /2 - ball->Height /2;
    horizontalMovementValue = -15;
    verticalMovementValue = -10;
 
