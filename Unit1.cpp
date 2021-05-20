@@ -21,6 +21,8 @@ int numberOfRounds = 0;
 int numberOfBounces = 0;
 int startingTime = 3;
 int spareSpace = 0;
+int newGame = 0;
+int numberOfDisplayedMessageBox = 0;
 
 void showLabels ()
 {
@@ -194,6 +196,27 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
+  char * text =  "Witaj w grze PingPong!  \n\nLewy gracz steruje wciskaj¹c klawisze A oraz Z.\n\
+Prawy gracz steruje wciskaj¹c strza³ki do góry i w dó³. \n\n\
+Dla urozmaicenia zabawy: \n\
+Paletka zosta³a podzielona na poni¿sze strefy:\n\
+ - œrodkowa czêœæ paletki: pi³ka odbija siê poziomo i przyspiesza,\n\
+ - górna czêœæ paletki: pi³ka odbija sie w dó³,\n\
+ - dolna czêœæ paletki: pi³ka odbija sie w górê,\n\
+ - skrajne górna i dolna czêœæ paletki: pi³ka zmiania k¹t odbicia i przyspiesza.\n\
+Im d³u¿ej odbijasz, tym pi³ka szybciej przemieszcza siê.\n\
+Mo¿esz dowolnie zmieiaæ pole gry.\n\n\
+Mi³ej zabawy! :)";
+
+   if(numberOfDisplayedMessageBox == 0)
+     {
+       TimerBall->Enabled = false;
+       SpeedTimeTimer->Enabled = false;
+       Countdown->Enabled = false;
+       Application->MessageBox (text, "PingPong", MB_OK);
+       numberOfDisplayedMessageBox ++;
+     }
+
    bMiddleLine->Height = background->Height;
    bMiddleLine->Left = (background->Width + bLeftLine->Width *2) /2 - bMiddleLine->Width /2;
    ball->Left = (background->Width + bLeftLine->Width *2) /2 - ball->Width /2;
@@ -220,7 +243,6 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
    verticalMovementValue = -10;
 
    Label1->Caption = "~> Zagrajmy w Ping Ponga! <~";
-
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::up1Timer(TObject *Sender)
@@ -305,18 +327,36 @@ void __fastcall TForm1::SpeedTimeTimerTimer(TObject *Sender)
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-  startingTime = 3;
-  sndPlaySound("sound/gong.wav", SND_ASYNC);
-  Countdown->Enabled = true;
-  CountdownTimer(Sender);
+  char * text = "Czy na pewno chcesz zacz¹æ od nowa?";
 
-  numberOfLeftPlayerWins = 0;
-  numberOfRightPlayerWins = 0;
-  numberOfRounds = 0;
-  numberOfBounces = 0;
-  Label1->Visible = false;
-  Button1->Visible = false;
+  if (newGame == 0)
+  {
+     sndPlaySound("sound/gong.wav", SND_ASYNC);
+     Countdown->Enabled = true;
+     CountdownTimer(Sender);
 
+     Label1->Visible = false;
+     Button1->Visible = false;
+  }
+  else
+  {
+    if (Application->MessageBox (text, "PotwierdŸ", MB_YESNO | MB_ICONQUESTION) == IDYES)
+    {
+      startingTime = 3;
+      sndPlaySound("sound/gong.wav", SND_ASYNC);
+      Countdown->Enabled = true;
+      CountdownTimer(Sender);
+
+      numberOfLeftPlayerWins = 0;
+      numberOfRightPlayerWins = 0;
+      numberOfRounds = 0;
+      numberOfBounces = 0;
+      Label1->Visible = false;
+      Button1->Visible = false;
+    }
+  }
+
+  newGame ++;
 }
 //---------------------------------------------------------------------------
 

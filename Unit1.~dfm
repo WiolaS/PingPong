@@ -793,7 +793,7 @@ object Form1: TForm1
     Width = 313
     Height = 49
     Cursor = crHandPoint
-    Caption = '~> Nastepna runda'
+    Caption = '~> Nast'#281'pna runda'
     Font.Charset = EASTEUROPE_CHARSET
     Font.Color = clWindowText
     Font.Height = -29
